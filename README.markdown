@@ -40,3 +40,6 @@ Note2: if you are using my [DotFiles](https://github.com/euricovidal/dotfiles) r
 
 <a name=credits>
 ### Credits
+
+### Update submodules
+* `git submodule foreach git pull origin master`
