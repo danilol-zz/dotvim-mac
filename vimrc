@@ -4,7 +4,7 @@
 
 " I'm using pathogen =>
 " https://gist.github.com/manasthakur/ab4cf8d32a28ea38271ac0d07373bb53
-call pathogen#runtime_append_all_bundles()
+"call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 execute pathogen#infect()
 filetype plugin indent on
@@ -15,8 +15,8 @@ syntax on
 " }}}
 " Basic options --------------------------------------------------------------------- {{{
 
-"color molokai
-color koehler
+color molokai
+"color koehler
 set t_Co=256
 set encoding=utf-8
 set laststatus=2
@@ -28,7 +28,7 @@ set showbreak=↪
 set nolinebreak
 set number
 set nowrap
-"set colorcolumn=120
+set colorcolumn=160
 set cursorcolumn
 set cursorline
 " enable to out file without save (on buffer)
@@ -150,7 +150,7 @@ set shiftwidth=2
 " Ruby {{{
 
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-"autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 "improve autocomplete menu color
@@ -241,7 +241,7 @@ vnoremap L g_
 " }}}
 
 " For ruby, autoindent with two spaces, always expand tabs
-autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
+autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,tf set ai sw=2 sts=2 et
 
 " For python autoindent with four spaces
 autocmd FileType php,python set sw=4 sts=4 et
@@ -249,7 +249,7 @@ autocmd FileType php,python set sw=4 sts=4 et
 " Highlight characters longer than 121 characters
 "autocmd BufEnter * highlight OverLength ctermbg=black guibg=#003542 guibg=#592929
 autocmd BufEnter * highlight OverLength ctermbg=red guibg=#FF0000 guibg=#FF0000
-autocmd BufEnter * match OverLength /\%121v.*/
+autocmd BufEnter * match OverLength /\%161v.*/
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -526,3 +526,28 @@ nnoremap <leader><CR>     :Buffers<CR>
 nnoremap <leader>fl       :Lines<CR>
 nnoremap <leader>ag       :Ag! <C-R><C-W><CR>
 nnoremap <leader>m        :History<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PROMOTE VARIABLE TO RSPEC LET
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! PromoteToLet()
+  :normal! dd
+  " :exec '?^\s*it\>'
+  :normal! P
+  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
+  :normal ==
+endfunction
+:command! PromoteToLet :call PromoteToLet()
+:map <leader>var :PromoteToLet<cr>
+
+
+"let g:ale_lint_on_save = 1
+let NERDTreeShowHidden=1
+let g:syntastic_ruby_rubocop_exec='/usr/bin/ruby /Users/danilolima/.rvm/gems/ruby-2.6.5/bin/rubocop'
+
+"terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+let g:go_fmt_autosave = 1
