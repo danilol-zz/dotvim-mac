@@ -544,10 +544,63 @@ endfunction
 
 "let g:ale_lint_on_save = 1
 let NERDTreeShowHidden=1
-let g:syntastic_ruby_rubocop_exec='/usr/bin/ruby /Users/danilolima/.rvm/gems/ruby-2.6.5/bin/rubocop'
-
+"let g:syntastic_ruby_rubocop_exec='/usr/bin/ruby /Users/danilolima/.rvm/gems/ruby-2.6.5/bin/rubocop'
+let g:syntastic_ruby_rubocop_exec='bundle'
+"let g:ale_ruby_rubocop_options = '--auto-correct'
+"let g:ale_lint_on_save = 1
+"let g:ale_linters = {
+      "\   'ruby': ['rubocop'],
+      "\}
+"let g:ale_fixers = {
+  "\ 'ruby'     : ['rubocop']
+  "\}
 "terraform
+
+
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
 
 let g:go_fmt_autosave = 1
+
+"fzf.vim
+let g:fzf_layout = { 'down': '~40%' }
+
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+
+
+
+"  coc vim
+autocmd FileType typescript let b:coc_root_patterns = ['.eslintrc']
+autocmd FileType typescript.tsx let b:coc_root_patterns = ['.eslintrc']
+autocmd FileType typescript let b:coc_root_patterns = ['.eslintrc']
+autocmd FileType typescript.tsx let b:coc_root_patterns = ['.eslintrc']
+autocmd VimLeavePre * :call coc#rpc#kill()
+autocmd VimLeave * if get(g:, 'coc_process_pid', 0) | call system('kill -9 -'.g:coc_process_pid) | endif
+" Use K to show documentation in preview window.
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+let g:coc_global_extensions = [
+  \ 'coc-prettier',
+  \ 'coc-eslint',
+  \ 'coc-json',
+  \ ]
+
+nmap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> ,s :<C-u>CocList -I symbols<cr>
+nmap <silent> ,k <Plug>(coc-diagnostic-prev)
+nmap <silent> ,j <Plug>(coc-diagnostic-next)
+nmap <silent> ,d <Plug>(coc-codeaction)<CR>
+nnoremap <silent> ;; :call <SID>show_documentation()<CR>
+
+"command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
